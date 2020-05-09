@@ -14,6 +14,7 @@ The links and snippets are stored in a `.json` file and will be deleted after be
 
 - Create an `.htaccess`:
 
+
   ```
   RewriteEngine on
 
@@ -25,6 +26,7 @@ The links and snippets are stored in a `.json` file and will be deleted after be
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule /?(.+)/?$ index.php?id=$1 [QSA,L]
   ```
+
 - Create a `config.php` file based on `config-demo.php`.
 - Create a `style.css` file based on `style.css`.
 - `mkdir path/to/your/data`  

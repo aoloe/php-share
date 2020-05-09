@@ -17,8 +17,8 @@ The links and snippets are stored in a `.json` file and will be deleted after be
     ```
     RewriteEngine on
 
-#   ually it RewriteBase is just '/', but
-#   place it with your subdirectory path
+    # Usually it RewriteBase is just '/', but
+    # replace it with your subdirectory path
     RewriteBase /share/
 
     RewriteCond %{REQUEST_FILENAME} !-f

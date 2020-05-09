@@ -14,18 +14,17 @@ The links and snippets are stored in a `.json` file and will be deleted after be
 
 - Create an `.htaccess`:
 
+    ```
+    RewriteEngine on
 
-  ```
-  RewriteEngine on
+#   ually it RewriteBase is just '/', but
+#   place it with your subdirectory path
+    RewriteBase /share/
 
-# ually it RewriteBase is just '/', but
-# place it with your subdirectory path
-  RewriteBase /share/
-
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule /?(.+)/?$ index.php?id=$1 [QSA,L]
-  ```
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule /?(.+)/?$ index.php?id=$1 [QSA,L]
+    ```
 
 - Create a `config.php` file based on `config-demo.php`.
 - Create a `style.css` file based on `style.css`.

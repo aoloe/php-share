@@ -33,6 +33,7 @@ if (array_key_exists('id', $_REQUEST)) {
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=2.0">
         <title>share</title>
         <link rel="stylesheet" href="style.css">
     </head>

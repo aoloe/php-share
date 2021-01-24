@@ -8,6 +8,7 @@ $config = include('config.php');
 $filename = $config['data_path'].'/share.json';
 $id = null;
 $output = null;
+$is_link = false;
 if (array_key_exists('id', $_REQUEST)) {
     $id = trim($_REQUEST['id']);
     if ($id !== '') {
@@ -19,6 +20,7 @@ if (array_key_exists('id', $_REQUEST)) {
                 $shared = $stored[$id];
                 if (preg_match('#^http[s]?://.+#', $shared) === 1) {
                     $output = "<a href=\"$shared\">$shared</a>";
+                    $is_link = true;
                 } else {
                     $output = htmlspecialchars($shared);
                 }
@@ -47,6 +49,16 @@ if (array_key_exists('id', $_REQUEST)) {
         </form>
         <?php else : ?>
         <p><?= $output ?></p>
+        <?php if ($is_link) : ?>
+        <div id="qrcode"></div>
+        <script type="text/javascript" src="js/qrcode.js"></script>
+        <script type="text/javascript">
+        window.onload = function() {
+            console.log(document.getElementById('qrcode'));
+            new QRCode(document.getElementById('qrcode'), '<?= $shared ?>');
+        }
+        </script>
+        <?php endif; ?>
         <?php endif; ?>
     </body>
 </html>

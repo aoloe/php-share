@@ -7,27 +7,32 @@ error_reporting(E_ALL);
 $config = include('config.php');
 $filename = $config['data_path'].'/share.json';
 $id = null;
-$output = null;
+$shared = null;
 $is_link = false;
+$output = null;
 if (array_key_exists('id', $_REQUEST)) {
     $id = trim($_REQUEST['id']);
     if ($id !== '') {
         $stored = file_exists($filename) ? json_decode(file_get_contents($filename), 1) : [];
+
         if (array_key_exists('shared', $_REQUEST)) {
-            $stored[$id] = $_REQUEST['shared'];
-        } else {
-            if (array_key_exists($id, $stored)) {
-                $shared = $stored[$id];
-                if (preg_match('#^http[s]?://.+#', $shared) === 1) {
-                    $output = "<a href=\"$shared\">$shared</a>";
-                    $is_link = true;
-                } else {
-                    $output = htmlspecialchars($shared);
-                }
-                unset($stored[$id]);
+            $shared = $_REQUEST['shared'];
+            $stored[$id] = $shared;
+        } elseif (array_key_exists($id, $stored)) {
+            $shared = $stored[$id];
+            unset($stored[$id]);
+        }
+
+        file_put_contents($filename, json_encode($stored));
+
+        if (isset($shared)) {
+            if (preg_match('#^http[s]?://.+#', $shared) === 1) {
+                $output = "<a href=\"$shared\">$shared</a>";
+                $is_link = true;
+            } else {
+                $output = htmlspecialchars($shared);
             }
         }
-        file_put_contents($filename, json_encode($stored));
     }
 }
 ?>
@@ -40,7 +45,7 @@ if (array_key_exists('id', $_REQUEST)) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <?php if (is_null($output)) : ?>
+        <?php if (is_null($shared)) : ?>
         <form method="post">
         <p>id <input name="id"<?= isset($id) ? ' value="'.$id.'"' : ''?>></p>
         <p>shared text / url:<br>
@@ -49,6 +54,7 @@ if (array_key_exists('id', $_REQUEST)) {
         </form>
         <?php else : ?>
         <p><?= $output ?></p>
+        <?php endif; ?>
         <?php if ($is_link) : ?>
         <div id="qrcode"></div>
         <script type="text/javascript" src="js/qrcode.js"></script>
@@ -58,7 +64,6 @@ if (array_key_exists('id', $_REQUEST)) {
             new QRCode(document.getElementById('qrcode'), '<?= $shared ?>');
         }
         </script>
-        <?php endif; ?>
         <?php endif; ?>
     </body>
 </html>

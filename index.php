@@ -30,7 +30,8 @@ if (array_key_exists('id', $_REQUEST)) {
                 $output = "<a href=\"$shared\">$shared</a>";
                 $is_link = true;
             } else {
-                $output = htmlspecialchars($shared);
+                // $output = htmlspecialchars($shared);
+                $output = '<pre>'.$shared.'</pre>';
             }
         }
     }

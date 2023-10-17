@@ -29,4 +29,4 @@ The links and snippets are stored in a `.json` file and will be deleted after be
 - Create a `config.php` file based on `config-demo.php`.
 - Create a `style.css` file based on `style.css`.
 - `mkdir path/to/your/data`  
-  (if  you don't want the list of the 
+  (if  you don't want the list of the shared text to be world readable)

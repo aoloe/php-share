@@ -26,7 +26,7 @@ if (array_key_exists('id', $_REQUEST)) {
         file_put_contents($filename, json_encode($stored));
 
         if (isset($shared)) {
-            if (preg_match('#^http[s]?://.+#', $shared) === 1) {
+            if (!str_contains($shared, ' ') && preg_match('#^http[s]?://.+#', $shared) === 1) {
                 $output = "<a href=\"$shared\">$shared</a>";
                 $is_link = true;
             } else {
